@@ -27,7 +27,12 @@ public class Order {
         return order;
     }
 
+    public void addOrderProduct(OrderProduct orderProduct) {
+        orderProducts.add(orderProduct);
+    }
+
     public int getOrderPrice() {
+
         return orderProducts.
                 stream().
                 mapToInt(OrderProduct::getTotalPrice)
