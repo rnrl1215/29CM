@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 
 import java.math.BigDecimal;
 
@@ -19,20 +18,29 @@ public class OrderProduct {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    private Orders order;
+
+    @Column(name = "order_price")
+    private BigDecimal orderPrice;
+
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
 
     public OrderProduct(Product product) {
         this.product = product;
     }
 
-    private BigDecimal orderPrice;
-    private int quantity;
+    public void setOrder(Orders order) {
+        this.order = order;
+    }
 
     public void setOrderPrice (BigDecimal orderPrice) {
         this.orderPrice = orderPrice;
@@ -52,7 +60,7 @@ public class OrderProduct {
     }
 
     public int getTotalPrice() {
-         return this.orderPrice
+         return orderPrice
                  .multiply(BigDecimal.valueOf(quantity)).intValue();
     }
 }
