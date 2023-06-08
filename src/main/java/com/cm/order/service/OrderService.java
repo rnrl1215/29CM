@@ -30,11 +30,12 @@ public class OrderService {
     }
 
     @Transactional
-    public void order(Long orderId, Long productId, Integer quantity) {
+    public Orders order(Long orderId, Long productId, Integer quantity) {
         Orders findOrder = findByOrder(orderId);
         Product product = findProduct(productId);
         OrderProduct orderProduct = OrderProduct.createOrderProduct(product, quantity);
         findOrder.addOrderProduct(orderProduct);
+        return findOrder;
     }
 
     public OrderPriceInfo getTotalOrderPrice(Long orderId) {
