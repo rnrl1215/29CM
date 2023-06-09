@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Scanner;
@@ -36,20 +37,24 @@ public class OrderApplication {
 
 		while (true) {
 			System.out.print("상품번호: ");
-			String productId = sc.next();
+			String productId = sc.nextLine();
 			if(productId.equals("q")) {
 				break;
 			}
 
 			System.out.print("수량: ");
-			int quantity = sc.nextInt();
+			String  quantity = sc.nextLine();
 			System.out.println();
+
+			if (!StringUtils.hasText(productId) && StringUtils.hasText(quantity)) {
+				break;
+			}
 
 			try {
 				if (order == null) {
-					order = staticOrderService.order(Long.valueOf(productId), quantity);
+					order = staticOrderService.order(Long.valueOf(productId), Integer.valueOf(quantity));
 				} else {
-					staticOrderService.order(order,Long.valueOf(productId), quantity);
+					staticOrderService.order(order,Long.valueOf(productId), Integer.valueOf(quantity));
 				}
 			} catch (OrderException e) {
 				log.info(e.getMessage());
@@ -57,7 +62,11 @@ public class OrderApplication {
 				break;
 			}
 		}
-		staticOrderService.printOrderProducts(order);
+
+		if (order != null) {
+			staticOrderService.printOrderProducts(order);
+		}
+
 		run.close();
 	}
 }

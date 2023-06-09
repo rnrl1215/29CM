@@ -41,7 +41,7 @@ public class Product {
     public void removeQuantity(int quantity) {
         int remainQuantity = this.quantity - quantity;
         if (remainQuantity < 0) {
-            throw new NotEnoughStockException("Not enough quantity");
+            throw new NotEnoughStockException();
         }
         this.quantity = remainQuantity;
     }

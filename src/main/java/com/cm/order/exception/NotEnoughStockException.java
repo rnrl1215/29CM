@@ -2,18 +2,6 @@ package com.cm.order.exception;
 
 public class NotEnoughStockException extends OrderException {
     public NotEnoughStockException() {
-        super();
-    }
-
-    public NotEnoughStockException(String message) {
-        super(message);
-    }
-
-    public NotEnoughStockException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public NotEnoughStockException(Throwable cause) {
-        super(cause);
+        super(ExceptionType.NOT_ENOUGHT_STOCK.getMessage());
     }
 }
