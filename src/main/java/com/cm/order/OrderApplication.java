@@ -3,6 +3,7 @@ package com.cm.order;
 import com.cm.order.domain.OrderProduct;
 import com.cm.order.domain.Orders;
 import com.cm.order.domain.Product;
+import com.cm.order.exception.OrderException;
 import com.cm.order.service.OrderService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -43,10 +44,17 @@ public class OrderApplication {
 			System.out.print("수량: ");
 			int quantity = sc.nextInt();
 			System.out.println();
-			if (order == null) {
-				order = staticOrderService.order(Long.valueOf(productId), quantity);
-			} else {
-				staticOrderService.order(order,Long.valueOf(productId), quantity);
+
+			try {
+				if (order == null) {
+					order = staticOrderService.order(Long.valueOf(productId), quantity);
+				} else {
+					staticOrderService.order(order,Long.valueOf(productId), quantity);
+				}
+			} catch (OrderException e) {
+				log.info(e.getMessage());
+			} catch (Exception e) {
+				break;
 			}
 		}
 		staticOrderService.printOrderProducts(order);

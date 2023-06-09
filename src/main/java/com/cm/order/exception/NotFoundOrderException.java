@@ -1,6 +1,6 @@
 package com.cm.order.exception;
 
-public class NotFoundOrderException extends RuntimeException {
+public class NotFoundOrderException extends OrderException {
     public NotFoundOrderException() {
         super();
     }

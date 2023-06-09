@@ -1,6 +1,6 @@
 package com.cm.order.exception;
 
-public class NotEnoughStockException extends RuntimeException {
+public class NotEnoughStockException extends OrderException {
     public NotEnoughStockException() {
         super();
     }

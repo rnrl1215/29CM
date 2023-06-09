@@ -135,9 +135,9 @@ class OrderServiceTest {
             });
         }
 
-        // then
         countDownLatch.await();
 
+        // then
         Orders orders = order.get();
         List<OrderProduct> orderProducts = orders.getOrderProducts();
         for (OrderProduct orderProduct : orderProducts) {
